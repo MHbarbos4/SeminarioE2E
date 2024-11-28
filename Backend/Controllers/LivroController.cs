@@ -32,53 +32,65 @@ namespace Backend.Controllers
         // PUT: api/Livro/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLivro(int id, Livro livro)
-        {
-            if (id != livro.Id)
-            {
-                return BadRequest();
-            }
+public async Task<IActionResult> PutLivro(int id, CriarLivroDTO criarLivroDto)
+{
+    // Verificar se o livro a ser atualizado existe
+    var livroExistente = await _context.Livro.FindAsync(id);
+    if (livroExistente == null)
+    {
+        return NotFound($"Livro com ID {id} não encontrado.");
+    }
 
-            _context.Entry(livro).State = EntityState.Modified;
+    // Verificar se já existe outro livro com o mesmo nome, mas com ID diferente
+    var livroDuplicado = await _context.Livro
+        .FirstOrDefaultAsync(l => l.Nome == criarLivroDto.Nome && l.Id != id);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LivroExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+    if (livroDuplicado != null)
+    {
+        return BadRequest("Já existe um livro cadastrado com este nome.");
+    }
 
-            return NoContent();
-        }
+    // Atualizando os dados do livro
+    livroExistente.Nome = criarLivroDto.Nome;
+    livroExistente.Descrição = criarLivroDto.Descrição;
+
+    // Salvando as alterações no banco de dados
+    await _context.SaveChangesAsync();
+
+    // Retornando o livro atualizado
+    return Ok(livroExistente);
+}
+
 
         // POST: api/Livro
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-public async Task<ActionResult<Livro>> PostLivro(CriarLivroDTO criarLivroDto)
-{
-    // Mapeando o DTO para o modelo Livro
-    var livro = new Livro
-    {
+        public async Task<ActionResult<Livro>> PostLivro(CriarLivroDTO criarLivroDto)
+        {
+        // Verificar se já existe um livro com o mesmo Nome
+        var livroExistente = await _context.Livro
+        .FirstOrDefaultAsync(l => l.Nome == criarLivroDto.Nome);
+
+        if (livroExistente != null)
+        {
+        return BadRequest("Já existe um livro cadastrado com este nome.");
+        }
+
+        // Mapeando o DTO para o modelo Livro
+        var livro = new Livro
+        {
         Nome = criarLivroDto.Nome,
         Descrição = criarLivroDto.Descrição
-    };
+        };
 
-    // Adicionando o livro ao contexto
-    _context.Livro.Add(livro);
-    await _context.SaveChangesAsync();
+        // Adicionando o livro ao contexto
+        _context.Livro.Add(livro);
+        await _context.SaveChangesAsync();
 
-    // Retornando o recurso criado
-    return CreatedAtAction("GetLivro", new { id = livro.Id }, livro);
-}
+        // Retornando o recurso criado
+        return CreatedAtAction("GetLivro", new { id = livro.Id }, livro);
+    }
+
 
 
         // DELETE: api/Livro/5
