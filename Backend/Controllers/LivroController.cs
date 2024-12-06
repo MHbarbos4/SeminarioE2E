@@ -32,6 +32,39 @@ namespace Backend.Controllers
         // PUT: api/Livro/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+
+//Código sem tratamento
+
+//  public async Task<IActionResult> PutLivro(int id, Livro livro)
+//         {
+//             if (id != livro.Id)
+//             {
+//                 return BadRequest();
+//             }
+
+//             _context.Entry(livro).State = EntityState.Modified;
+
+//             try
+//             {
+//                 await _context.SaveChangesAsync();
+//             }
+//             catch (DbUpdateConcurrencyException)
+//             {
+//                 if (!LivroExists(id))
+//                 {
+//                     return NotFound();
+//                 }
+//                 else
+//                 {
+//                     throw;
+//                 }
+//             }
+
+//             return NoContent();
+//         }
+
+
+  //Codigo com tratamento      
 public async Task<IActionResult> PutLivro(int id, CriarLivroDTO criarLivroDto)
 {
     // Verificar se o livro a ser atualizado existe
@@ -65,6 +98,22 @@ public async Task<IActionResult> PutLivro(int id, CriarLivroDTO criarLivroDto)
         // POST: api/Livro
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+
+//    public async Task<ActionResult<Livro>> PostLivro(CriarLivroDTO criarLivroDto)
+//      {
+    
+//     var livro = new Livro
+//     {
+//         Nome = criarLivroDto.Nome,
+//         Descrição = criarLivroDto.Descrição
+//     };
+    
+//     _context.Livro.Add(livro);
+//     await _context.SaveChangesAsync();
+
+//     return CreatedAtAction("GetLivro", new { id = livro.Id }, livro);
+// }
+
         public async Task<ActionResult<Livro>> PostLivro(CriarLivroDTO criarLivroDto)
         {
         // Verificar se já existe um livro com o mesmo Nome

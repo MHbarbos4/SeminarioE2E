@@ -2,8 +2,9 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   e2e: {
+    specPattern: "cypress/e2e/**/*.cy.js",  // Ajuste o caminho conforme sua estrutura de pastas
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // implemente os ouvintes de eventos do nó aqui
     },
   },
 });

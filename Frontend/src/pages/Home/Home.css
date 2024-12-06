@@ -1,14 +1,79 @@
-.home {
-    padding: 20px;
+/* Estilo geral */
+body {
+  background-color: #f4f4f4;
+}
+ 
+/* Estilo da tela */
+.add-book {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+ 
+/* Estilo do card */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+ 
+.card h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+ 
+.card p {
+  margin-bottom: 20px;
+  color: #7f8c8d;
+  font-size: 16px;
+}
+ 
+/* Estilo do popup */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-in 2.8s;
+}
+ 
+.notification.success {
+  background: #2ecc71;
+}
+ 
+.notification.error {
+  background: #e74c3c;
+}
+ 
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .home h1 {
-    font-size: 28px;
-    color: #2c3e50;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .home p {
-    font-size: 16px;
-    color: #7f8c8d;
+}
+ 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
