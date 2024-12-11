@@ -65,3 +65,6 @@ Este projeto representa um passo importante no aprendizado prático de aplicaç�
 6. Rode o cypress local:
     ```bash
     npx cypress run
+
+## Integrantes 
+Matheus E João Barbosa
